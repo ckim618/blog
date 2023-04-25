@@ -1,9 +1,10 @@
 import React from "react";
-import { client, getContentData } from "contentful";
+const { client, getContentData } = require('../../contentful');
 
 const Post = (props) => {
 
-    console.log(props);
+
+console.log(props);
 
   return <div>List of all blog posts?</div>;
 };
@@ -15,7 +16,7 @@ export async function getStaticProps({ params }) {
     items: [articleEntry = {}],
   } = await client.getEntries({
     content_type: "pageBlogPost",
-    "fields.slug[in]": params.slug,
+    "fields.slug[in]": `/posts/${params.slug}`,
     limit: 1,
     include: 10,
   });
