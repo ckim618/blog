@@ -3,11 +3,10 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
-
 const path = require('path');
 
 module.exports = {
+  nextConfig,
     env: {
         CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
         CONTENTFUL_HOST: process.env.CONTENTFUL_HOST,
