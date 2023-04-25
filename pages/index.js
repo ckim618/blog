@@ -11,7 +11,7 @@ export default function Home() {
     paragraph: {
       p1: "cats",
       p2: "cats",
-      p3: "cats"
+      p3: "cats",
     },
     subTitle: {
       st1: "why your cat does...",

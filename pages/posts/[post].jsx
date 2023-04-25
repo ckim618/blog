@@ -1,29 +1,43 @@
-import React from 'react'
+import React from "react";
+import { client, getContentData } from "contentful";
 
-const Post = () => {
-  return (
-    <div>
-        List of all blog posts?
-    </div>
-  )
-}
+const Post = (props) => {
+
+    console.log(props);
+
+  return <div>List of all blog posts?</div>;
+};
 
 export default Post;
 
-export const getStaticProps = async () => {
-    return {
-      props: {
-      },
-    };
+export async function getStaticProps({ params }) {
+  const {
+    items: [articleEntry = {}],
+  } = await client.getEntries({
+    content_type: "pageBlogPost",
+    "fields.slug[in]": params.slug,
+    limit: 1,
+    include: 10,
+  });
+
+  return {
+    props: {
+      articleData: getContentData(articleEntry),
+    },
   };
-  
-  export const getStaticPaths = async () => {
-    const response = await fetch(
-      ``
-    ).then((res) => res.json());
-  
+};
+
+export async function getStaticPaths() {
+    const { items: articleItems = [] } = await client.getEntries({
+        content_type: 'pageBlogPost',
+        limit: 100,
+        include: 10,
+    });
+
+    const paths = articleItems.map(({ fields: { slug = '' } = {} }) => slug);
+
     return {
-      paths: [],
-      fallback: false,
+        paths,
+        fallback: false,
     };
-  };
+};
