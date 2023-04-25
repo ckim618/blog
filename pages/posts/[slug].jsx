@@ -2,8 +2,6 @@ import React from "react";
 const { client, getContentData } = require('../../contentful');
 
 const Post = (props) => {
-
-
 console.log(props);
 
   return <div>List of all blog posts?</div>;
@@ -16,7 +14,7 @@ export async function getStaticProps({ params }) {
     items: [articleEntry = {}],
   } = await client.getEntries({
     content_type: "pageBlogPost",
-    "fields.slug[in]": `/posts/${params.slug}`,
+    "fields.slug[in]": params.post,
     limit: 1,
     include: 10,
   });
@@ -35,7 +33,9 @@ export async function getStaticPaths() {
         include: 10,
     });
 
-    const paths = articleItems.map(({ fields: { slug = '' } = {} }) => slug);
+    const paths = articleItems.map(({ fields: { slug = '' } = {} }) => (
+      {params: {post: slug}}
+    ));
 
     return {
         paths,
